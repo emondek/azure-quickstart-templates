@@ -1,0 +1,75 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "Central US"
+    },
+    "tagAppNameValue": {
+      "value": "WBA RFP Demo"
+    },
+    "tagAppEnvValue": {
+      "value": "Dev"
+    },
+    "tagSecZoneValue": {
+      "value": "Internal Non-Sensitive Dev-Test"
+    },
+    "standardStorageAccountName": {
+      "value": "wbademossa01"
+    },
+    "premiumStorageAccountName": {
+      "value": "wbademopsa01"
+    },
+    "avSetName": {
+      "value": "wbademoavset01"
+    },
+    "publicIPName": {
+      "value": "wbademopip01"
+    },
+    "dnsNameForPublicIP": {
+      "value": "wbademo01"
+    },
+    "lbName": {
+      "value": "wbademolb01"
+    },
+    "nicNamePrefix": {
+      "value": "wbademonic0"
+    },
+    "vnetName": {
+      "value": "wbademovnet01"
+    },
+    "vnetResGrpName": {
+      "value": "wbademonetworkrg01"
+    },
+    "subnetName": {
+      "value": "WEB"
+    },
+    "vmNamePrefix": {
+      "value": "wbademovm0"
+    },
+    "vmSize": {
+      "value": "Standard_DS2_v2"
+    },
+    "vmCount": {
+      "value": 2
+    },
+    "vmStartIndex": {
+      "value": 1
+    },
+    "adminUsername": {
+      "value": "wbaadmin"
+    },
+    "adminPassword": {
+      "value": "Welcome123!"
+    },
+    "imagePublisher": {
+      "value": "RedHat"
+    },
+    "imageOffer": {
+      "value": "RHEL"
+    },
+    "imageSku": {
+      "value": "7.2"
+    }
+  }
+}

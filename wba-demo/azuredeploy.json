@@ -1,0 +1,360 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "West US",
+      "metadata": {
+        "description": "Deployment location"
+      }
+    },
+    "tagAppNameValue": {
+      "type": "string",
+      "metadata": {
+        "description": "Value used for the Application Name tag"
+      }
+    },
+    "tagAppEnvValue": {
+      "type": "string",
+      "metadata": {
+        "description": "Value used for the Application Environment tag"
+      }
+    },
+    "tagSecZoneValue": {
+      "type": "string",
+      "metadata": {
+        "description": "Value used for the Security Zone tag"
+      }
+    },
+    "standardStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the standard storage account"
+      }
+    },
+    "premiumStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the premium storage account"
+      }
+    },
+    "avSetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the availability set"
+      }
+    },
+    "publicIPName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the public IP resource"
+      }
+    },
+    "dnsNameForPublicIP": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS name for the public IP"
+      }
+    },
+    "lbName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the load balancer resource"
+      }
+    },
+    "nicNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix for the NIC resource"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the virtual network where the VM will be deployed"
+      }
+    },
+    "vnetResGrpName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the resource group containing the virtual network"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the subnet where the VM will be deployed"
+      }
+    },
+    "vmNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix for the VM resource"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "description": "VM Size for the VM resource"
+      }
+    },
+    "vmCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of VMs to deploy"
+      }
+    },
+    "vmStartIndex": {
+      "type": "int",
+      "metadata": {
+        "description": "Starting index for VM names"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Local admin user for the VM"
+      }
+    },
+    "adminPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "Local admin password for the VM"
+      }
+    },
+    "imagePublisher": {
+      "type": "string",
+      "metadata": {
+        "description": "Publisher for the Azure Gallery VM Image"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "metadata": {
+        "description": "Offer for the Azure Gallery VM Image"
+      }
+    },
+    "imageSku": {
+      "type": "string",
+      "metadata": {
+        "description": "Sku for the Azure Gallery VM Image"
+      }
+    }
+  },
+  "variables": {
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2016-03-30",
+    "storageApiVersion": "2016-01-01",
+    "tagAppName": "AppName",
+    "tagAppEnv": "AppEnv",
+    "tagSecZone": "SecZone",
+    "standardStorageAccountType": "Standard_LRS",
+    "premiumStorageAccountType": "Premium_LRS",
+    "vnetId": "[resourceId(parameters('vnetResGrpName'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+    "lbId": "[resourceId('Microsoft.Network/loadBalancers', parameters('lbName'))]",
+    "publicIPId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPName'))]",
+    "frontEndIPConfigId": "[concat(variables('lbID'), '/frontendIPConfigurations/loadBalancerFrontend')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('standardStorageAccountName')]",
+      "apiVersion": "[variables('storageApiVersion')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "[variables('tagAppName')]": "[parameters('tagAppNameValue')]",
+        "[variables('tagAppEnv')]": "[parameters('tagAppEnvValue')]",
+        "[variables('tagSecZone')]": "[parameters('tagSecZoneValue')]"
+      },
+      "sku": { 
+        "name": "[variables('standardStorageAccountType')]" 
+      }, 
+      "kind": "Storage", 
+      "properties": {
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('premiumStorageAccountName')]",
+      "apiVersion": "[variables('storageApiVersion')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "[variables('tagAppName')]": "[parameters('tagAppNameValue')]",
+        "[variables('tagAppEnv')]": "[parameters('tagAppEnvValue')]",
+        "[variables('tagSecZone')]": "[parameters('tagSecZoneValue')]"
+      },
+      "sku": { 
+        "name": "[variables('premiumStorageAccountType')]" 
+      }, 
+      "kind": "Storage", 
+      "properties": {
+      }
+    },
+    {
+      "apiVersion": "[variables('computeApiVersion')]",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('avSetName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "platformFaultDomainCount": 3,
+        "platformUpdateDomainCount": 6
+      }
+    },
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[concat(parameters('publicIPName'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(parameters('nicNamePrefix'), copyIndex(parameters('vmStartIndex')))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]",
+        "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'), '/inboundNatRules/SSH', copyIndex(parameters('vmStartIndex')))]"
+      ],
+      "copy": {
+        "name": "nicLoop",
+        "count": "[parameters('vmCount')]"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[concat(variables('vnetId'),'/subnets/', parameters('subnetName'))]"
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(variables('lbId'), '/backendAddressPools/LoadBalancerBackend')]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[concat(variables('lbId'),'/inboundNatRules/SSH', copyindex(parameters('vmStartIndex')))]"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "name": "[parameters('lbName')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "LoadBalancerFrontend",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[variables('publicIPId')]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "LoadBalancerBackend"
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+      "name": "[concat(parameters('lbName'), '/SSH', copyIndex(parameters('vmStartIndex')))]",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "lbNatLoop",
+        "count": "[parameters('vmCount')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+      ],
+      "properties": {
+        "frontendIPConfiguration": {
+          "id": "[variables('frontEndIPConfigId')]"
+        },
+        "protocol": "tcp",
+        "frontendPort": "[copyIndex(5001)]",
+        "backendPort": 22,
+        "enableFloatingIP": false
+      }
+    },
+    {
+      "apiVersion": "[variables('computeApiVersion')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('vmNamePrefix'), copyIndex(parameters('vmStartIndex')))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', parameters('standardStorageAccountName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', parameters('premiumStorageAccountName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyIndex(parameters('vmStartIndex')))]",
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('avSetName'))]"
+      ],
+      "copy": {
+        "name": "vmLoop",
+        "count": "[parameters('vmCount')]"
+      },
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('avSetName'))]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('vmNamePrefix'), copyIndex(parameters('vmStartIndex')))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('imageSku')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', parameters('premiumStorageAccountName'), '.blob.core.windows.net/vhds/', parameters('vmNamePrefix'), copyIndex(parameters('vmStartIndex')), '-osdisk.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('nicNamePrefix'), copyIndex(parameters('vmStartIndex'))))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": { 
+          "bootDiagnostics": { 
+            "enabled": "true", 
+            "storageUri": "[reference(concat('Microsoft.Storage/storageAccounts/', parameters('standardStorageAccountName')), variables('storageApiVersion')).primaryEndpoints.blob]" 
+          } 
+        } 
+      }
+    }
+  ]
+}

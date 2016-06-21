@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Depoy WBA Demo Environment",
+  "description": "This template deploys multiple VMs behind a Load Balancer with NAT rules",
+  "summary": "This template deploys multiple VMs behind a Load Balancer with NAT rules",
+  "githubUsername": "emondek",
+  "dateUpdated": "2016-06-21"
+}
