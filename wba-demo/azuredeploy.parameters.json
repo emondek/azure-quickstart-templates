@@ -9,43 +9,43 @@
       "value": "WBA RFP Demo"
     },
     "tagAppEnvValue": {
-      "value": "Dev"
+      "value": "QA"
     },
     "tagSecZoneValue": {
       "value": "Internal Non-Sensitive Dev-Test"
     },
     "standardStorageAccountName": {
-      "value": "wbademossa01"
+      "value": "wbademoqassa01"
     },
     "premiumStorageAccountName": {
-      "value": "wbademopsa01"
+      "value": "wbademoqapsa01"
     },
     "avSetName": {
-      "value": "wbademoavset01"
+      "value": "wbademoqaavset01"
     },
     "publicIPName": {
-      "value": "wbademopip01"
+      "value": "wbademoqapip01"
     },
     "dnsNameForPublicIP": {
-      "value": "wbademo01"
+      "value": "wbademoqa01"
     },
     "lbName": {
-      "value": "wbademolb01"
+      "value": "wbademoqalb01"
     },
     "nicNamePrefix": {
-      "value": "wbademonic0"
+      "value": "wbademoqanic0"
     },
     "vnetName": {
-      "value": "wbademovnet01"
+      "value": "wbademoqavnet01"
     },
     "vnetResGrpName": {
-      "value": "wbademonetworkrg01"
+      "value": "wbademoqanetrg01"
     },
     "subnetName": {
       "value": "WEB"
     },
     "vmNamePrefix": {
-      "value": "wbademovm0"
+      "value": "wbademoqavm0"
     },
     "vmSize": {
       "value": "Standard_DS2_v2"

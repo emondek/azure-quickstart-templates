@@ -18,7 +18,7 @@
     },
     "tagAppEnvValue": {
       "type": "string",
-      "defaultValue": "Dev",
+      "defaultValue": "QA",
       "metadata": {
         "description": "Value used for the Application Environment tag"
       }
@@ -32,63 +32,63 @@
     },
     "standardStorageAccountName": {
       "type": "string",
-      "defaultValue": "wbademossa01",
+      "defaultValue": "wbademoqassa01",
       "metadata": {
         "description": "Name of the standard storage account"
       }
     },
     "premiumStorageAccountName": {
       "type": "string",
-      "defaultValue": "wbademopsa01",
+      "defaultValue": "wbademoqapsa01",
       "metadata": {
         "description": "Name of the premium storage account"
       }
     },
     "avSetName": {
       "type": "string",
-      "defaultValue": "wbademoavset01",
+      "defaultValue": "wbademoqaavset01",
       "metadata": {
         "description": "Name of the availability set"
       }
     },
     "publicIPName": {
       "type": "string",
-      "defaultValue": "wbademopip01",
+      "defaultValue": "wbademoqapip01",
       "metadata": {
         "description": "Name for the public IP resource"
       }
     },
     "dnsNameForPublicIP": {
       "type": "string",
-      "defaultValue": "wbademo01",
+      "defaultValue": "wbademoqa01",
       "metadata": {
         "description": "DNS name for the public IP"
       }
     },
     "lbName": {
       "type": "string",
-      "defaultValue": "wbademolb01",
+      "defaultValue": "wbademoqalb01",
       "metadata": {
         "description": "Name for the load balancer resource"
       }
     },
     "nicNamePrefix": {
       "type": "string",
-      "defaultValue": "wbademonic0",
+      "defaultValue": "wbademoqanic0",
       "metadata": {
         "description": "Name prefix for the NIC resource"
       }
     },
     "vnetName": {
       "type": "string",
-      "defaultValue": "wbademovnet01",
+      "defaultValue": "wbademoqavnet01",
       "metadata": {
         "description": "Name of the virtual network where the VM will be deployed"
       }
     },
     "vnetResGrpName": {
       "type": "string",
-      "defaultValue": "wbademonetworkrg01",
+      "defaultValue": "wbademoqanetrg01",
       "metadata": {
         "description": "Name of the resource group containing the virtual network"
       }
@@ -102,7 +102,7 @@
     },
     "vmNamePrefix": {
       "type": "string",
-      "defaultValue": "wbademovm0",
+      "defaultValue": "wbademoqavm0",
       "metadata": {
         "description": "Name prefix for the VM resource"
       }
