@@ -3,7 +3,7 @@
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Femondek%2Fazure-quickstart-templates%2Fwba-demo%2Fwba-demo%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Femondek%2Fazure-quickstart-templates%2Fwba-demo%2Fwba-demo%2Fazuredeploy.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fbitbucket.org%2Femondek%2Fazure-quickstart-templates%2Fraw%2F4d0f7a3f73bfb326a3255ffffc9a58a600188fd4%2Fwba-demo%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
